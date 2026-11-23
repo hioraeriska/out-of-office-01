@@ -23,12 +23,17 @@ def check_reply(text):
     return None
 
 
+def resolve_output_dir():
+    """Return the output directory for entry.txt."""
+    return os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+
+
 def write_reply():
     problem = check_reply(REPLY)
     if problem is not None:
         print("invalid reply: " + problem, file=sys.stderr)
         return 1
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    out_dir = resolve_output_dir()
     os.makedirs(out_dir, exist_ok=True)
     target = os.path.join(out_dir, "entry.txt")
     with open(target, "w", encoding="utf-8", newline="") as handle:
