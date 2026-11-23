@@ -20,6 +20,8 @@ def check_reply(text):
         return "reply is %d characters, over the 160 limit" % len(text)
     if "\n" in text or "\r" in text:
         return "reply must be a single line"
+    if any(ord(ch) < 32 for ch in text):
+        return "reply contains a control character"
     return None
 
 
